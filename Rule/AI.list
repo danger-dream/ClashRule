@@ -1,14 +1,5 @@
-# ChatGPT第三方Windows客户端——https://github.com/lencx/ChatGPT
-PROCESS-NAME,msedgewebview2.exe
-
-# poe
 DOMAIN-SUFFIX,poe.com
-
-# 风控
 DOMAIN-SUFFIX,sentry.io
-
-# OPENAI所用到的服务相关域名，包括Google和CloudFlare的人机验证之类
-# DOMAIN-SUFFIX,akamaized.net
 DOMAIN-SUFFIX,vimeocdn.com
 DOMAIN-SUFFIX,blob.core.windows.net
 DOMAIN-SUFFIX,googleapis.com
@@ -32,7 +23,6 @@ DOMAIN-SUFFIX,edgecompute.app
 DOMAIN-SUFFIX,compute-pipe.com
 DOMAIN-SUFFIX,stripe.network
 DOMAIN-SUFFIX,gpt3sandbox.com
-# openai
 DOMAIN,ai.cn
 DOMAIN-SUFFIX,ai.com
 DOMAIN-SUFFIX,auth0.com
@@ -43,6 +33,13 @@ DOMAIN-SUFFIX,identrust.com
 DOMAIN-SUFFIX,stripe.com
 DOMAIN,cdn.usefathom.com
 DOMAIN-KEYWORD,openai
-# claude
 DOMAIN-SUFFIX,anthropic.com
 DOMAIN-SUFFIX,claude.ai
+DOMAIN-SUFFIX,openai.com
+DOMAIN-SUFFIX,challenges.cloudflare.com
+DOMAIN-SUFFIX,chat.openai.com.cdn.cloudflare.net
+DOMAIN-SUFFIX,openaiapi-site.azureedge.net
+DOMAIN-SUFFIX,bing.com
+DOMAIN-SUFFIX,bard.google.com
+DOMAIN-SUFFIX,oaistatic.com
+DOMAIN-SUFFIX,oaiusercontent.com
