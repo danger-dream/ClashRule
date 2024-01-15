@@ -1,45 +1,46 @@
-DOMAIN-SUFFIX,poe.com
-DOMAIN-SUFFIX,sentry.io
-DOMAIN-SUFFIX,vimeocdn.com
-DOMAIN-SUFFIX,blob.core.windows.net
-DOMAIN-SUFFIX,googleapis.com
-DOMAIN-SUFFIX,azurefd.net
-DOMAIN-SUFFIX,azureedge.net
-DOMAIN-SUFFIX,cdn.cloudflare.net
-DOMAIN-SUFFIX,hcaptcha.com
-DOMAIN-SUFFIX,gstatic.com
-DOMAIN-SUFFIX,vimeo.com
-DOMAIN-SUFFIX,googletagmanager.com
-DOMAIN-SUFFIX,f7tk.com
-DOMAIN-SUFFIX,doubleclick.net
-DOMAIN-SUFFIX,google-analytics.com
-DOMAIN-SUFFIX,intercom.io
-DOMAIN-SUFFIX,statsigapi.net
-DOMAIN-SUFFIX,featuregates.org
-DOMAIN-SUFFIX,intercomcdn.com
-DOMAIN-SUFFIX,pki.goog
-DOMAIN-SUFFIX,cloudflareinsights.com
-DOMAIN-SUFFIX,edgecompute.app
-DOMAIN-SUFFIX,compute-pipe.com
-DOMAIN-SUFFIX,stripe.network
-DOMAIN-SUFFIX,gpt3sandbox.com
-DOMAIN,ai.cn
-DOMAIN-SUFFIX,ai.com
-DOMAIN-SUFFIX,auth0.com
-DOMAIN-SUFFIX,challenges.cloudflare.com
-DOMAIN-SUFFIX,client-api.arkoselabs.com
-DOMAIN-SUFFIX,events.statsigapi.net
-DOMAIN-SUFFIX,identrust.com
-DOMAIN-SUFFIX,stripe.com
-DOMAIN,cdn.usefathom.com
-DOMAIN-KEYWORD,openai
-DOMAIN-SUFFIX,anthropic.com
-DOMAIN-SUFFIX,claude.ai
-DOMAIN-SUFFIX,openai.com
-DOMAIN-SUFFIX,challenges.cloudflare.com
-DOMAIN-SUFFIX,chat.openai.com.cdn.cloudflare.net
-DOMAIN-SUFFIX,openaiapi-site.azureedge.net
-DOMAIN-SUFFIX,bing.com
-DOMAIN-SUFFIX,bard.google.com
-DOMAIN-SUFFIX,oaistatic.com
-DOMAIN-SUFFIX,oaiusercontent.com
+payload:
+  - DOMAIN-SUFFIX,poe.com
+  - DOMAIN-SUFFIX,sentry.io
+  - DOMAIN-SUFFIX,vimeocdn.com
+  - DOMAIN-SUFFIX,blob.core.windows.net
+  - DOMAIN-SUFFIX,googleapis.com
+  - DOMAIN-SUFFIX,azurefd.net
+  - DOMAIN-SUFFIX,azureedge.net
+  - DOMAIN-SUFFIX,cdn.cloudflare.net
+  - DOMAIN-SUFFIX,hcaptcha.com
+  - DOMAIN-SUFFIX,gstatic.com
+  - DOMAIN-SUFFIX,vimeo.com
+  - DOMAIN-SUFFIX,googletagmanager.com
+  - DOMAIN-SUFFIX,f7tk.com
+  - DOMAIN-SUFFIX,doubleclick.net
+  - DOMAIN-SUFFIX,google-analytics.com
+  - DOMAIN-SUFFIX,intercom.io
+  - DOMAIN-SUFFIX,statsigapi.net
+  - DOMAIN-SUFFIX,featuregates.org
+  - DOMAIN-SUFFIX,intercomcdn.com
+  - DOMAIN-SUFFIX,pki.goog
+  - DOMAIN-SUFFIX,cloudflareinsights.com
+  - DOMAIN-SUFFIX,edgecompute.app
+  - DOMAIN-SUFFIX,compute-pipe.com
+  - DOMAIN-SUFFIX,stripe.network
+  - DOMAIN-SUFFIX,gpt3sandbox.com
+  - DOMAIN,ai.cn
+  - DOMAIN-SUFFIX,ai.com
+  - DOMAIN-SUFFIX,auth0.com
+  - DOMAIN-SUFFIX,challenges.cloudflare.com
+  - DOMAIN-SUFFIX,client-api.arkoselabs.com
+  - DOMAIN-SUFFIX,events.statsigapi.net
+  - DOMAIN-SUFFIX,identrust.com
+  - DOMAIN-SUFFIX,stripe.com
+  - DOMAIN,cdn.usefathom.com
+  - DOMAIN-KEYWORD,openai
+  - DOMAIN-SUFFIX,anthropic.com
+  - DOMAIN-SUFFIX,claude.ai
+  - DOMAIN-SUFFIX,openai.com
+  - DOMAIN-SUFFIX,challenges.cloudflare.com
+  - DOMAIN-SUFFIX,chat.openai.com.cdn.cloudflare.net
+  - DOMAIN-SUFFIX,openaiapi-site.azureedge.net
+  - DOMAIN-SUFFIX,bing.com
+  - DOMAIN-SUFFIX,bard.google.com
+  - DOMAIN-SUFFIX,oaistatic.com
+  - DOMAIN-SUFFIX,oaiusercontent.com
