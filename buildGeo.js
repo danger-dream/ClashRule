@@ -23,7 +23,9 @@ const cfg = {
 		'category-ads-all': [baseGeoSite, metaGeoSite],
 		'geolocation-cn': [baseGeoSite, metaGeoSite],
 		'category-games': [baseGeoSite, metaGeoSite],
-		'category-games@cn': [baseGeoSite, metaGeoSite]
+		'category-games@cn': [baseGeoSite, metaGeoSite],
+		gfw: [baseGeoSite, metaGeoSite],
+		'geolocation-!cn': [baseGeoSite, metaGeoSite],
 	},
 	ruleSet: {
 		paypal: 'https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/PayPal/PayPal.yaml',
@@ -138,12 +140,12 @@ async function start() {
 		cfg.ruleSet[k] = await loadRuleSet(cfg.ruleSet[k])
 	}
 	const ruleConfig = [
-		{ name: 'ads', geosite: [cfg.geosite['category-ads-all']], weight: 1 },
+		{ name: 'ads', geosite: [cfg.geosite['category-ads-all']], weight: 1, cn: true },
 		{
-			name: 'cn',
+			name: 'cn', weight: 10, cn: true,
 			geosite: [cfg.geosite.private, cfg.geosite.cn, cfg.geosite.apple, cfg.geosite['geolocation-cn']],
 			ruleSet: [cfg.ruleSet['国内媒体'], cfg.ruleSet.paypal],
-			geoip: [cfg.geoip.private, cfg.geoip.lan, cfg.geoip.cn], weight: 10
+			geoip: [cfg.geoip.private, cfg.geoip.lan, cfg.geoip.cn]
 		},
 		{ name: 'ai', ruleSet: [cfg.ruleSet.ai], weight: 99 },
 		{ name: 'youtube', ruleSet: [cfg.ruleSet.youtube], weight: 99 },
@@ -153,13 +155,17 @@ async function start() {
 		{ name: 'netflix', geosite: [cfg.geosite.netflix], weight: 99 },
 		{ name: 'microsoft', geosite: [cfg.geosite.microsoft], weight: 49 },
 		{ name: 'games', geosite: [cfg.geosite['category-games']], weight: 50 },
-		{ name: 'chinagames', geosite: [cfg.geosite['category-games@cn']], weight: 99 },
+		{ name: 'chinagames', geosite: [cfg.geosite['category-games@cn']], weight: 99, cn: true },
 		{ name: 'discord', ruleSet: [cfg.ruleSet.discord], weight: 99 },
-		{ name: 'media', ruleSet: [cfg.ruleSet.国外媒体], weight: 9 }
+		{ name: 'media', ruleSet: [cfg.ruleSet.国外媒体], weight: 9 },
+		{ name: 'gfw', geosite: [cfg.geosite.gfw, cfg.geosite['geolocation-!cn']] },
 	]
 	const geoip = { entry: [] }
 	const geosite = { entry: [] }
 	for (const item of ruleConfig) {
+		if (item.name === 'gfw') {
+			continue
+		}
 		let curGeoIP = geoip.entry.find(x => x.countryCode.toLowerCase() === item.name)
 		if (!curGeoIP) {
 			curGeoIP = { countryCode: item.name, cidr: new Cidr(), weight: item.weight }
@@ -180,10 +186,6 @@ async function start() {
 				}
 			}
 			for (const k of Object.keys(geoSiteRuleMap)) {
-				const { type, value } = geoSiteRuleMap[k]
-				if (type === 2 && !value.includes('.')) {
-					geoSiteRuleMap[k].type = 0
-				}
 				curGeoSite.domain.push(geoSiteRuleMap[k])
 			}
 		}
@@ -272,17 +274,43 @@ async function start() {
 		}
 		delete item.weight
 	}
-	const GeoSiteList = v2ray.lookupType('v2ray.GeoSiteList')
-	const arr = GeoSiteList.encode({ entry: geosite.entry }).finish()
-	fs.writeFileSync(join(__dirname, 'geosite.dat'), Buffer.from(arr))
+	
+	const gfwRuleConfig = ruleConfig.find(x => x.name === 'gfw')
+	if (gfwRuleConfig) {
+		const geoSiteRuleMap = {}
+		for (const arr of gfwRuleConfig.geosite) {
+			for (const geosite of arr) {
+				for (const d of geosite) {
+					delete d.attribute
+					geoSiteRuleMap[d.value + '|' + d.type] = d
+				}
+			}
+		}
+		for (const site of geosite.entry) {
+			if (site.countryCode === 'cn') {
+				continue
+			}
+			for (const d of site.domain) {
+				geoSiteRuleMap[d.value + '|' + d.type] = d
+			}
+		}
+		const domain = []
+		for (const k of Object.keys(geoSiteRuleMap)) {
+			domain.push(geoSiteRuleMap[k])
+		}
+		geosite.entry.push({ countryCode: 'gfw', domain: domain })
+	}
 	
 	geoip.entry = geoip.entry.filter(x => x.cidr.size() > 0)
 	for (const item of geoip.entry) {
 		item.cidr = item.cidr.toList()
 		delete item.weight
 	}
-	const GeoIPList = v2ray.lookupType('v2ray.GeoIPList')
-	const arr2 = GeoIPList.encode({ entry: geoip.entry }).finish()
+	
+	const arr = v2ray.lookupType('v2ray.GeoSiteList').encode(geosite).finish()
+	fs.writeFileSync(join(__dirname, 'geosite.dat'), Buffer.from(arr))
+	
+	const arr2 = v2ray.lookupType('v2ray.GeoIPList').encode(geoip).finish()
 	fs.writeFileSync(join(__dirname, 'geoip.dat'), Buffer.from(arr2))
 }
 
