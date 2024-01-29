@@ -1,0 +1,53 @@
+//  https://github.com/v2fly/v2ray-core/blob/master/app/router/routercommon/common.proto
+syntax = "proto3";
+package v2ray;
+
+message Domain {
+  enum Type {
+    Plain = 0;
+    Regex = 1;
+    RootDomain = 2;
+    Full = 3;
+  }
+  Type type = 1;
+  string value = 2;
+
+  message Attribute {
+    string key = 1;
+
+    oneof typed_value {
+      bool bool_value = 2;
+      int64 int_value = 3;
+    }
+  }
+  repeated Attribute attribute = 3;
+}
+
+message CIDR {
+  bytes ip = 1;
+  uint32 prefix = 2;
+  string ip_addr = 68000 [(FieldOpt).convert_time_parse_ip = "ip"];
+}
+
+message GeoIP {
+  string country_code = 1;
+  repeated CIDR cidr = 2;
+  bool inverse_match = 3;
+  bytes resource_hash = 4;
+  string code = 5;
+}
+
+message GeoIPList {
+  repeated GeoIP entry = 1;
+}
+
+message GeoSite {
+  string country_code = 1;
+  repeated Domain domain = 2;
+  bytes resource_hash = 3;
+  string code = 4;
+}
+
+message GeoSiteList {
+  repeated GeoSite entry = 1;
+}

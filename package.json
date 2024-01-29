@@ -1,0 +1,14 @@
+{
+	"name": "clashrule",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+	},
+	"private": true,
+	"dependencies": {
+		"js-yaml": "^4.1.0",
+		"native-dns-packet": "^0.1.1",
+		"protobufjs": "^7.2.6"
+	}
+}
