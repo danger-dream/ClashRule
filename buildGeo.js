@@ -8,6 +8,7 @@ const v2ray = protobuf.loadSync(join(__dirname, 'v2ray.proto'))
 const baseGeoIp = 'https://cdn.jsdelivr.net/gh/Loyalsoldier/v2ray-rules-dat@release/geoip.dat'
 const baseGeoSite = 'https://cdn.jsdelivr.net/gh/Loyalsoldier/v2ray-rules-dat@release/geosite.dat'
 const metaGeoSite = 'https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/geosite.dat'
+const cn_ip_txt = 'https://ispip.clang.cn/all_cn.txt'
 
 const cfg = {
 	geoip: { private: baseGeoIp, cn: baseGeoIp, lan: baseGeoIp, google: baseGeoIp, netflix: baseGeoIp, telegram: baseGeoIp },
@@ -34,6 +35,9 @@ const cfg = {
 		discord: 'https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Discord/Discord.yaml',
 		国内媒体: 'https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/ChinaMedia/ChinaMedia.yaml',
 		国外媒体: 'https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/GlobalMedia/GlobalMedia_Classical.yaml'
+	},
+	ip_txt: {
+		cn_ip_txt
 	}
 }
 
@@ -139,13 +143,17 @@ async function start() {
 	for (const k of Object.keys(cfg.ruleSet)) {
 		cfg.ruleSet[k] = await loadRuleSet(cfg.ruleSet[k])
 	}
+	for (const k of Object.keys(cfg.ip_txt)) {
+		cfg.ip_txt[k] = (await (await fetch(cfg.ip_txt[k])).text()).split('\n')
+	}
 	const ruleConfig = [
-		{ name: 'ads', geosite: [cfg.geosite['category-ads-all']], weight: 1, cn: true },
+		//{ name: 'ads', geosite: [cfg.geosite['category-ads-all']], weight: 1, cn: true },
 		{
 			name: 'cn', weight: 10, cn: true,
 			geosite: [cfg.geosite.private, cfg.geosite.cn, cfg.geosite.apple, cfg.geosite['geolocation-cn']],
 			ruleSet: [cfg.ruleSet['国内媒体'], cfg.ruleSet.paypal],
-			geoip: [cfg.geoip.private, cfg.geoip.lan, cfg.geoip.cn]
+			geoip: [cfg.geoip.private, cfg.geoip.lan, cfg.geoip.cn],
+			ip_txt: [cfg.ip_txt.cn_ip_txt]
 		},
 		{ name: 'ai', ruleSet: [cfg.ruleSet.ai], weight: 99 },
 		{ name: 'youtube', ruleSet: [cfg.ruleSet.youtube], weight: 99 },
@@ -230,6 +238,19 @@ async function start() {
 					curGeoIP.cidr.addCidr(cidr)
 				}
 			}
+		}
+		if (item.ip_txt) {
+			for (const ips of item.ip_txt) {
+				for (const ip of ips) {
+					try {
+						if (curGeoIP.cidr.contains(ip)) {
+							continue
+						}
+						curGeoIP.cidr.add(ip)
+					} catch {}
+				}
+			}
+		
 		}
 	}
 	for (const item of geoip.entry) {

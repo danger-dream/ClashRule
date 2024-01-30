@@ -22,6 +22,7 @@ async function matchDomain(domain, rules) {
 			return strategy
 		}
 	}
+	console.log(`匹配规则：未匹配`)
 	return '未匹配'
 }
 
@@ -29,10 +30,9 @@ async function start() {
 	await geo.loadGeoIp('./geoip.dat')
 	await geo.loadGeoSite('./geosite.dat')
 	
-	const domian = 's.baidu.com'
-	const st = Date.now()
+	const domian = 'www.okx.com'
+	let st = Date.now()
 	await matchDomain(domian, [
-		'GEOSITE,ads,REJECT',
 		'GEOSITE,cn,CN',
 		'GEOSITE,ai,ai',
 		'GEOSITE,youtube,youtube',
@@ -51,6 +51,12 @@ async function start() {
 		'GEOIP,media,media',
 		'GEOIP,cn,CN'
 	])
+	console.log('耗时：' + (Date.now() - st))
+	
+	
+	const ip = '119.8.2.121'
+	st = Date.now()
+	console.log('匹配IP', geo.containsGeoIp(ip) || '未匹配')
 	console.log('耗时：' + (Date.now() - st))
 }
 

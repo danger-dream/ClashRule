@@ -1,5 +1,5 @@
 function getIpRange(ip, maskStr) {
-	if (ip.includes('/')) {
+	if (typeof ip === 'string' && ip.includes('/')) {
 		const [ipStr, mask] = ip.split('/')
 		maskStr = mask
 		ip = ipStr
