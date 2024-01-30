@@ -2,28 +2,24 @@
 
 ```bash
 root@proxy:~# node testGeo.js
-# geoip
-geoip: cn cidr size: 7074
-geoip: youtube cidr size: 2
-geoip: google cidr size: 427
+geoip: cn cidr size: 7739
+geoip: youtube cidr size: 2 
+geoip: google cidr size: 430
 geoip: telegram cidr size: 8
-geoip: media cidr size: 893
-
-# geosite
-geosite: ads domain size: 72446
-geosite: cn domain size: 71059
-geosite: ai domain size: 44
-geosite: youtube domain size: 179
-geosite: google domain size: 904
-geosite: telegram domain size: 19
-geosite: github domain size: 26
-geosite: netflix domain size: 27
-geosite: microsoft domain size: 559
-geosite: games domain size: 531
+geoip: media cidr size: 893 
+geosite: cn domain size: 71052
+geosite: ai domain size: 44         
+geosite: youtube domain size: 179   
+geosite: google domain size: 904    
+geosite: telegram domain size: 19   
+geosite: github domain size: 26     
+geosite: netflix domain size: 27    
+geosite: microsoft domain size: 559 
+geosite: games domain size: 531     
 geosite: chinagames domain size: 151
-geosite: discord domain size: 28
-geosite: media domain size: 1090
-geosite: gfw domain size: 94586
+geosite: discord domain size: 28    
+geosite: media domain size: 1090    
+geosite: gfw domain size: 22225
 ```
 > **gfw**包含除**cn**、**chinagames**外所有类别的域名
 
